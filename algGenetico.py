@@ -30,15 +30,21 @@ def iniciar():
     print('Fuera del Siclo For')
     binario = decimal_a_binario(presicion)
     print(f"El número {presicion} es {binario} en binario")
-    poblacion_Inicial()
+    poblacion_Inicial(presicion)
+
+def completar_vinario():
+    print('entre a completar los binarios mi buen')
 
 
-def poblacion_Inicial():
+def poblacion_Inicial(presicion):
     for decimal in range(int(entrada_poiniciaL.get())):
-        decimal = random.randint(int(entrada_intervalo.get().split(',')[0]), int(entrada_intervalo.get().split(',')[1]))
-        decimal = decimal_a_binario(decimal)
-        poblacionInicial.append(decimal)
-        print('poblacion inicial ' + str(decimal))
+        decimal = random.randint(0, int(presicion))
+        binario = decimal_a_binario(decimal)
+        if len(binario) < 7:
+            completar_vinario()
+
+        poblacionInicial.append(binario)
+        print('poblacion inicial ' + str(binario))
 
     for n in poblacionInicial:
         print('Imprimiendo poblacion inicial' + str(n))
