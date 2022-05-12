@@ -1,20 +1,48 @@
+import random
+from tkinter import *
+import numpy
 
+poblacionInicial = []
 
-def deltaX():
-    print('este es Delta X')
+def deltaX(bits):
+    resulBits = pow(2,bits) - 1
+    print(resulBits)
+    resultado = bits / resulBits
+    # print ("{0:.3f}".format(resultado))
+    return "{0:.3f}".format(resultado)
+
+def valorX(bits,i):
+    x = int(entrada_intervalo.get().split(',')[0]) + int(i) * float(deltaX(bits))
+    print('X es igual a '+str(x))
 
 def iniciar():
-    intervalo = int(interFinal) - int(interInicial)
-    presi = intervalo / float(presicion) + 1
-    print(presi)
-    for n in range(1,9):
-        if presi <= pow(2,n):
-            print(n)
+    intervalo = entrada_intervalo.get().split(',')
+
+    presicion = (int(intervalo[1]) - (int(intervalo[0]))) / float(entrada_precision.get()) + 1
+
+    print(presicion)
+    for bits in range(1,9):
+        if presicion <= pow(2,bits):
+            print(bits)
+            valorX(bits,2)
             break
 
     print('Fuera del Siclo For')
-    binario = decimal_a_binario(presi)
-    print(f"El número {presi} es {binario} en binario")
+    binario = decimal_a_binario(presicion)
+    print(f"El número {presicion} es {binario} en binario")
+    poblacion_Inicial()
+
+
+def poblacion_Inicial():
+    for decimal in range(int(entrada_poiniciaL.get())):
+        decimal = random.randint(int(entrada_intervalo.get().split(',')[0]), int(entrada_intervalo.get().split(',')[1]))
+        decimal = decimal_a_binario(decimal)
+        poblacionInicial.append(decimal)
+        print('poblacion inicial ' + str(decimal))
+
+    for n in poblacionInicial:
+        print('Imprimiendo poblacion inicial' + str(n))
+
 
 def decimal_a_binario(decimal):
     if decimal <= 0:
@@ -32,9 +60,69 @@ def decimal_a_binario(decimal):
     return binario
 
 
+ventana = Tk()
+ventana.geometry('648x700')
+ventana.config(bg='#E5E6E8')
+ventana.title('Algoritmo Gentico')
 
-if __name__ == '__main__':
-    interInicial = input(print('Ingresa Intervalo inicial'))
-    interFinal = input(print('Ingresa el Intervalo Final'))
-    presicion = input(print('Ingresa la Presicion'))
-    iniciar()
+entrada_intervalo = StringVar()
+entrada_precision = StringVar()
+entrada_funcion = StringVar()
+entrada_poiniciaL = StringVar()
+entrada_pomaxima = StringVar()
+entrada_iteracion = StringVar()
+salida = StringVar()
+
+label = Label(ventana, text='ALGORITMO GENETICO', fg='#72A7E9')
+label.place(x=115, y=44)
+label.config(font="Inter 27 italic", bg='#E5E6E8')
+
+label_rango = Label(ventana, text='RANGO')
+label_rango.place(x=30, y=200)
+label_rango.config(font="Inter 10", bg='#E5E6E8')
+
+label_precision = Label(ventana, text='PRECISIÓN')
+label_precision.place(x=380, y=200)
+label_precision.config(font='Inter 10', bg='#E5E6E8')
+
+label_funcion = Label(ventana, text='FUNCIÓN')
+label_funcion.place(x=30, y=300)
+label_funcion.config(font='Inter 10', bg='#E5E6E8')
+
+label_inicial = Label(ventana, text='PO INICIAL')
+label_inicial.place(x=30, y=400)
+label_inicial.config(font='Inter 10', bg='#E5E6E8')
+
+label_maxima = Label(ventana, text='PO MAXIMA')
+label_maxima.place(x=200, y=400)
+label_maxima.config(font='Inter 10', bg='#E5E6E8')
+
+label_iteracion = Label(ventana, text='NÚMERO DE ITERACIÓN')
+label_iteracion.place(x=370, y=400)
+label_iteracion.config(font='Inter 10', bg='#E5E6E8')
+
+caja_rango = Entry(ventana, font='arial 13', justify='center', textvariable=entrada_intervalo, bg='#D3DAE2', bd=0)
+caja_rango.place(x=30, y=225, width=229, height=36)
+
+caja_precision = Entry(ventana, font='arial 13', justify='center', textvariable=entrada_precision, bg='#D3DAE2',
+                           bd=0)
+caja_precision.place(x=380, y=225, width=229, height=36)
+
+caja_funcion = Entry(ventana, font='arial 13', justify='center', textvariable=entrada_funcion, bg='#D3DAE2', bd=0)
+caja_funcion.place(x=30, y=325, width=578, height=36)
+
+caja_inicial = Entry(ventana, font='arial 13', justify='center', textvariable=entrada_poiniciaL, bg='#D3DAE2', bd=0)
+caja_inicial.place(x=30, y=425, width=144, height=36)
+
+caja_maxima = Entry(ventana, font='arial 13', justify='center', textvariable=entrada_pomaxima, bg='#D3DAE2', bd=0)
+caja_maxima.place(x=200, y=425, width=144, height=36)
+
+caja_iteracion = Entry(ventana, font='arial 13', justify='center', textvariable=entrada_iteracion, bg='#D3DAE2',
+                           bd=0)
+caja_iteracion.place(x=370, y=425, width=238, height=36)
+
+boton = Button(ventana, text='ACEPTAR', command=iniciar)
+boton.place(x=200, y=550, width=205, height=38)
+boton.config(font='Inter 15', bg='#F8E000', fg='black', bd=0)
+
+ventana.mainloop()
