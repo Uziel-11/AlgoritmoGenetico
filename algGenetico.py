@@ -32,7 +32,10 @@ def iniciar():
     print(f"El número {presicion} es {binario} en binario")
     poblacion_Inicial(presicion)
 
-def completar_vinario():
+def completar_vinario(bin):
+    for binario in len(bin):
+        binario = bin + 0
+
     print('entre a completar los binarios mi buen')
 
 
@@ -47,7 +50,7 @@ def poblacion_Inicial(presicion):
         print('poblacion inicial ' + str(binario))
 
     for n in poblacionInicial:
-        print('Imprimiendo poblacion inicial' + str(n))
+        print('Imprimiendo poblacion inicial ' + str(n))
 
 
 def decimal_a_binario(decimal):
